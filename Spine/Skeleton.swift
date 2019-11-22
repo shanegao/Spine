@@ -65,8 +65,12 @@ public class Skeleton: SKNode {
      - parameter skin: the name of the skin that you want to apply to 'Skeleton'. *optional*
      */
     public convenience init?(fromJSON name: String, atlas folder: String? = nil, skin: String? = nil) {
+        self.init(fromJSON: name, atlas: folder, skin: skin, inBundle: .main)
+    }
+    
+    public convenience init?(fromJSON name: String, atlas folder: String? = nil, skin: String? = nil, inBundle bundle: Bundle = .main) {
         
-        guard let url = Bundle.main.url(forResource: name, withExtension: "json"),
+        guard let url = bundle.url(forResource: name, withExtension: "json"),
               let json = try? Data(contentsOf: url),
               let model = try? JSONDecoder().decode(SpineModel.self, from: json) else {
                 
